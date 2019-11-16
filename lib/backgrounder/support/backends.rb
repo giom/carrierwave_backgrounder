@@ -23,7 +23,7 @@ module CarrierWave
           private
 
           def enqueue_active_job(worker, *args)
-            worker.perform_later(*args.map(&:to_s))
+            worker.set(wait_until: 5.seconds.from_now).perform_later(*args.map(&:to_s))
           end
 
           def enqueue_delayed_job(worker, *args)
